@@ -1,16 +1,15 @@
 package Entidades.Farmacos;
 
-public class Antialergico extends Farmaco {
-
+public class Antiinflamatorio extends Farmaco{
      String tipoProducto;
 
-     public Antialergico(String idProducto, String nombreProducto, String tipoVenta, double precio, int cantDisponible) {
+     public Antiinflamatorio(String idProducto, String nombreProducto, String tipoVenta, double precio, int cantDisponible) {
           super.setIdProducto(idProducto);
           super.setNombre(nombreProducto);
           super.setTipoVenta(tipoVenta);
           super.setPrecio(precio);
           super.setCantDisponible(cantDisponible);
-          this.tipoProducto = "Antialergico";
+          this.tipoProducto = "Antiinflamatorio";
      }
 
      public String getTipoProducto() {
@@ -21,4 +20,5 @@ public class Antialergico extends Farmaco {
           this.tipoProducto = tipoProducto;
      }
 
+     
 }
