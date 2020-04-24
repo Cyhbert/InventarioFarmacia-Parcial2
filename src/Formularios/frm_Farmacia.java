@@ -7,9 +7,15 @@ import Entidades.Farmacos.Antidepresivo;
 import Entidades.Farmacos.Antiinflamatorio;
 import Entidades.Farmacos.Antipiretico;
 import Entidades.Inventario.Inventario;
+import javax.swing.table.DefaultTableModel;
 
 public class frm_Farmacia extends javax.swing.JFrame {
 
+     //Utilidades
+     DefaultTableModel tablaModelo;
+
+     //Variables y demás.
+     private String tipoVenta;
      //Instancia del inventario
      Inventario inventario;
 
@@ -24,6 +30,7 @@ public class frm_Farmacia extends javax.swing.JFrame {
      public frm_Farmacia() {
           initComponents();
           this.startFrame();
+          this.inventario = new Inventario();
      }
 
      private void startFrame() {
@@ -45,7 +52,7 @@ public class frm_Farmacia extends javax.swing.JFrame {
           jLabel2 = new javax.swing.JLabel();
           txtNombreProducto = new javax.swing.JTextField();
           jLabel3 = new javax.swing.JLabel();
-          txtIdProducto = new javax.swing.JFormattedTextField();
+          ffIdProducto = new javax.swing.JFormattedTextField();
           jLabel4 = new javax.swing.JLabel();
           rbSoloReceta = new javax.swing.JRadioButton();
           rbVentaLibre = new javax.swing.JRadioButton();
@@ -78,11 +85,11 @@ public class frm_Farmacia extends javax.swing.JFrame {
           jLabel3.setText("Número Identicación");
 
           try {
-               txtIdProducto.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("####")));
+               ffIdProducto.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("####")));
           } catch (java.text.ParseException ex) {
                ex.printStackTrace();
           }
-          txtIdProducto.setFont(new java.awt.Font("Liberation Sans", 0, 14)); // NOI18N
+          ffIdProducto.setFont(new java.awt.Font("Liberation Sans", 0, 14)); // NOI18N
 
           jLabel4.setFont(new java.awt.Font("Liberation Sans", 0, 16)); // NOI18N
           jLabel4.setText("Tipo de venta");
@@ -115,6 +122,11 @@ public class frm_Farmacia extends javax.swing.JFrame {
 
           btnRegistrarProducto.setFont(new java.awt.Font("Liberation Sans", 1, 14)); // NOI18N
           btnRegistrarProducto.setText("Registrar");
+          btnRegistrarProducto.addActionListener(new java.awt.event.ActionListener() {
+               public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    btnRegistrarProductoActionPerformed(evt);
+               }
+          });
 
           jtInventarioTotal.setFont(new java.awt.Font("Liberation Sans", 0, 12)); // NOI18N
           jtInventarioTotal.setModel(new javax.swing.table.DefaultTableModel(
@@ -147,6 +159,11 @@ public class frm_Farmacia extends javax.swing.JFrame {
 
           cboIndexInventario.setFont(new java.awt.Font("Liberation Sans", 0, 14)); // NOI18N
           cboIndexInventario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Analgesicos", "Antiacidos", "Antialergicos", "Antidepresivos", "Antiinflamatorios", "Antipireticos" }));
+          cboIndexInventario.addActionListener(new java.awt.event.ActionListener() {
+               public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    cboIndexInventarioActionPerformed(evt);
+               }
+          });
 
           javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
           jPanel1.setLayout(jPanel1Layout);
@@ -169,7 +186,7 @@ public class frm_Farmacia extends javax.swing.JFrame {
                                                   .addGap(12, 12, 12)
                                                   .addComponent(jLabel3)
                                                   .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                  .addComponent(txtIdProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                  .addComponent(ffIdProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                         .addGap(46, 46, 46)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                              .addGroup(jPanel1Layout.createSequentialGroup()
@@ -216,7 +233,7 @@ public class frm_Farmacia extends javax.swing.JFrame {
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                          .addComponent(jLabel3)
-                         .addComponent(txtIdProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                         .addComponent(ffIdProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                          .addComponent(jLabel6)
                          .addComponent(spnCantDisponible, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGap(16, 16, 16)
@@ -259,11 +276,125 @@ public class frm_Farmacia extends javax.swing.JFrame {
           pack();
      }// </editor-fold>//GEN-END:initComponents
 
+     private void btnRegistrarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarProductoActionPerformed
+          if (this.rbSoloReceta.isSelected()) {
+               this.tipoVenta = this.rbSoloReceta.getText();
+          } else {
+               this.tipoVenta = this.rbVentaLibre.getText();
+          }
+          switch (this.cboTipoFarmaco.getSelectedIndex()) {
+               case 0:
+                    this.analgesico = new Analgesico(this.ffIdProducto.getText(), this.txtNombreProducto.getText().toUpperCase(),
+                            this.tipoVenta, Double.parseDouble(this.ffPrecio.getText()), (int) this.spnCantDisponible.getValue());
+                    this.inventario.agregarAnalgesico(analgesico);
+                    break;
+               case 1:
+                    this.antiacido = new Antiacido(this.ffIdProducto.getText(), this.txtNombreProducto.getText().toUpperCase(),
+                            this.tipoVenta, Double.parseDouble(this.ffPrecio.getText()), (int) this.spnCantDisponible.getValue());
+                    this.inventario.agregarAntiacido(antiacido);
+                    break;
+               case 2:
+                    this.antialergico = new Antialergico(this.ffIdProducto.getText(), this.txtNombreProducto.getText().toUpperCase(),
+                            this.tipoVenta, Double.parseDouble(this.ffPrecio.getText()), (int) this.spnCantDisponible.getValue());
+                    this.inventario.agregarAntialergicos(antialergico);
+                    break;
+               case 3:
+                    this.antidepresivo = new Antidepresivo(this.ffIdProducto.getText(), this.txtNombreProducto.getText().toUpperCase(),
+                            this.tipoVenta, Double.parseDouble(this.ffPrecio.getText()), (int) this.spnCantDisponible.getValue());
+                    this.inventario.agregarAntidepresivos(antidepresivo);
+                    break;
+               case 4:
+                    this.antiinflamatorio = new Antiinflamatorio(this.ffIdProducto.getText(), this.txtNombreProducto.getText().toUpperCase(),
+                            this.tipoVenta, Double.parseDouble(this.ffPrecio.getText()), (int) this.spnCantDisponible.getValue());
+                    this.inventario.agregarAntiinflamatorio(antiinflamatorio);
+                    break;
+               case 5:
+                    this.antipiretico = new Antipiretico(this.ffIdProducto.getText(), this.txtNombreProducto.getText().toUpperCase(),
+                            this.tipoVenta, Double.parseDouble(this.ffPrecio.getText()), (int) this.spnCantDisponible.getValue());
+                    this.inventario.agregarAntipireticos(antipiretico);
+                    break;
+          }
+          this.actualizarTablaInventario();
+     }//GEN-LAST:event_btnRegistrarProductoActionPerformed
+
+     private void cboIndexInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboIndexInventarioActionPerformed
+          this.actualizarTablaInventario();
+     }//GEN-LAST:event_cboIndexInventarioActionPerformed
+
+     private void actualizarTablaInventario() {
+          this.tablaModelo = (DefaultTableModel) this.jtInventarioTotal.getModel();
+          this.tablaModelo.getDataVector().removeAllElements();
+          this.tablaModelo.fireTableDataChanged();
+
+          switch (this.cboIndexInventario.getSelectedIndex()) {
+               case 0:
+                    for (int i = 0; i < this.inventario.getlAnalgesicos().size(); i++) {
+                         String datos[] = {this.inventario.getlAnalgesicos().get(i).getIdProducto(), this.inventario.getlAnalgesicos().get(i).getNombre(),
+                              String.valueOf(this.inventario.getlAnalgesicos().get(i).getPrecio()), String.valueOf(this.inventario.getlAnalgesicos().get(i).getCantDisponible()),
+                              this.inventario.getlAnalgesicos().get(i).getTipoVenta()};
+                         this.tablaModelo.addRow(datos);
+
+                    }
+                    break;
+               case 1:
+                    for (int i = 0; i < this.inventario.getlAntiacidos().size(); i++) {
+                         String datos[] = {this.inventario.getlAntiacidos().get(i).getIdProducto(), this.inventario.getlAntiacidos().get(i).getNombre(),
+                              String.valueOf(this.inventario.getlAntiacidos().get(i).getPrecio()), String.valueOf(this.inventario.getlAntiacidos().get(i).getCantDisponible()),
+                              this.inventario.getlAntiacidos().get(i).getTipoVenta()};
+                         this.tablaModelo.addRow(datos);
+
+                    }
+                    break;
+               case 2:
+                    for (int i = 0; i < this.inventario.getlAntialergicos().size(); i++) {
+                         String datos[] = {this.inventario.getlAntialergicos().get(i).getIdProducto(), this.inventario.getlAntialergicos().get(i).getNombre(),
+                              String.valueOf(this.inventario.getlAntialergicos().get(i).getPrecio()), String.valueOf(this.inventario.getlAntialergicos().get(i).getCantDisponible()),
+                              this.inventario.getlAntialergicos().get(i).getTipoVenta()};
+                         this.tablaModelo.addRow(datos);
+
+                    }
+                    break;
+               case 3:
+                    for (int i = 0; i < this.inventario.getlAntidepresivos().size(); i++) {
+                         String datos[] = {this.inventario.getlAntidepresivos().get(i).getIdProducto(), this.inventario.getlAntidepresivos().get(i).getNombre(),
+                              String.valueOf(this.inventario.getlAntidepresivos().get(i).getPrecio()), String.valueOf(this.inventario.getlAntidepresivos().get(i).getCantDisponible()),
+                              this.inventario.getlAntidepresivos().get(i).getTipoVenta()};
+                         this.tablaModelo.addRow(datos);
+
+                    }
+                    break;
+               case 4:
+                    for (int i = 0; i < this.inventario.getlAntiinflamatorios().size(); i++) {
+                         String datos[] = {this.inventario.getlAntiinflamatorios().get(i).getIdProducto(), this.inventario.getlAntiinflamatorios().get(i).getNombre(),
+                              String.valueOf(this.inventario.getlAntiinflamatorios().get(i).getPrecio()), String.valueOf(this.inventario.getlAntiinflamatorios().get(i).getCantDisponible()),
+                              this.inventario.getlAntiinflamatorios().get(i).getTipoVenta()};
+                         this.tablaModelo.addRow(datos);
+
+                    }
+                    break;
+               case 5:
+                    for (int i = 0; i < this.inventario.getlAntipireticos().size(); i++) {
+                         String datos[] = {this.inventario.getlAntipireticos().get(i).getIdProducto(), this.inventario.getlAntipireticos().get(i).getNombre(),
+                              String.valueOf(this.inventario.getlAntipireticos().get(i).getPrecio()), String.valueOf(this.inventario.getlAntipireticos().get(i).getCantDisponible()),
+                              this.inventario.getlAntipireticos().get(i).getTipoVenta()};
+                         this.tablaModelo.addRow(datos);
+
+                    }
+                    break;
+          }
+
+     }
+
+     private void cargarDatosAnalgesicos() {
+          this.tablaModelo = (DefaultTableModel) this.jtInventarioTotal.getModel();
+
+     }
      // Variables declaration - do not modify//GEN-BEGIN:variables
      private javax.swing.JButton btnRegistrarProducto;
      private javax.swing.ButtonGroup btngTipoVenta;
      private javax.swing.JComboBox<String> cboIndexInventario;
      private javax.swing.JComboBox<String> cboTipoFarmaco;
+     private javax.swing.JFormattedTextField ffIdProducto;
      private javax.swing.JFormattedTextField ffPrecio;
      private javax.swing.JLabel jLabel1;
      private javax.swing.JLabel jLabel2;
@@ -281,7 +412,6 @@ public class frm_Farmacia extends javax.swing.JFrame {
      private javax.swing.JRadioButton rbSoloReceta;
      private javax.swing.JRadioButton rbVentaLibre;
      private javax.swing.JSpinner spnCantDisponible;
-     private javax.swing.JFormattedTextField txtIdProducto;
      private javax.swing.JTextField txtNombreProducto;
      // End of variables declaration//GEN-END:variables
 }
