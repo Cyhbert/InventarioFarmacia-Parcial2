@@ -76,7 +76,7 @@ public class frm_Farmacia extends javax.swing.JFrame {
           jLabel10 = new javax.swing.JLabel();
           txtNombreProducto1 = new javax.swing.JTextField();
           jLabel11 = new javax.swing.JLabel();
-          jSpinner1 = new javax.swing.JSpinner();
+          spnFecha = new javax.swing.JSpinner();
           jLabel12 = new javax.swing.JLabel();
           spnCantCliente = new javax.swing.JSpinner();
           jLabel13 = new javax.swing.JLabel();
@@ -84,11 +84,16 @@ public class frm_Farmacia extends javax.swing.JFrame {
           jLabel14 = new javax.swing.JLabel();
           jLabel15 = new javax.swing.JLabel();
           cboIndexVenta = new javax.swing.JComboBox<>();
-          jButton1 = new javax.swing.JButton();
+          btnVenta = new javax.swing.JButton();
+          jLabel16 = new javax.swing.JLabel();
+          jScrollPane3 = new javax.swing.JScrollPane();
+          jtVentasRegistradas = new javax.swing.JTable();
 
           setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
           jTabbedPane1.setFont(new java.awt.Font("Liberation Sans", 0, 14)); // NOI18N
+
+          jPanel1.setPreferredSize(new java.awt.Dimension(869, 614));
 
           jLabel1.setFont(new java.awt.Font("Liberation Sans", 1, 20)); // NOI18N
           jLabel1.setText("Registrar Nuevo Producto");
@@ -270,7 +275,7 @@ public class frm_Farmacia extends javax.swing.JFrame {
                               .addComponent(jLabel8)
                               .addComponent(cboIndexInventario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGap(13, 13, 13)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 304, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE))
           );
 
           jTabbedPane1.addTab("Inventario", jPanel1);
@@ -318,14 +323,15 @@ public class frm_Farmacia extends javax.swing.JFrame {
           jLabel11.setFont(new java.awt.Font("Liberation Sans", 0, 16)); // NOI18N
           jLabel11.setText("Fecha de Compra");
 
-          jSpinner1.setFont(new java.awt.Font("Liberation Sans", 1, 12)); // NOI18N
-          jSpinner1.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(), new java.util.Date(1587702696242L), null, java.util.Calendar.DAY_OF_MONTH));
+          spnFecha.setFont(new java.awt.Font("Liberation Sans", 1, 12)); // NOI18N
+          spnFecha.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(), new java.util.Date(1587702696242L), null, java.util.Calendar.DAY_OF_MONTH));
 
           jLabel12.setFont(new java.awt.Font("Liberation Sans", 0, 16)); // NOI18N
           jLabel12.setText("Cantidad");
 
           spnCantCliente.setFont(new java.awt.Font("Liberation Sans", 1, 14)); // NOI18N
           spnCantCliente.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
+          spnCantCliente.setEnabled(false);
           spnCantCliente.addChangeListener(new javax.swing.event.ChangeListener() {
                public void stateChanged(javax.swing.event.ChangeEvent evt) {
                     spnCantClienteStateChanged(evt);
@@ -352,14 +358,47 @@ public class frm_Farmacia extends javax.swing.JFrame {
                }
           });
 
-          jButton1.setFont(new java.awt.Font("Liberation Sans", 1, 12)); // NOI18N
-          jButton1.setText("Realizar Venta");
+          btnVenta.setFont(new java.awt.Font("Liberation Sans", 1, 12)); // NOI18N
+          btnVenta.setText("Realizar Venta");
+          btnVenta.addActionListener(new java.awt.event.ActionListener() {
+               public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    btnVentaActionPerformed(evt);
+               }
+          });
+
+          jLabel16.setFont(new java.awt.Font("Liberation Sans", 0, 16)); // NOI18N
+          jLabel16.setText("Ultimas ventas registradas");
+
+          jtVentasRegistradas.setModel(new javax.swing.table.DefaultTableModel(
+               new Object [][] {
+
+               },
+               new String [] {
+                    "Nombre", "Fecha", "Producto", "Total"
+               }
+          ) {
+               boolean[] canEdit = new boolean [] {
+                    false, false, false, false
+               };
+
+               public boolean isCellEditable(int rowIndex, int columnIndex) {
+                    return canEdit [columnIndex];
+               }
+          });
+          jScrollPane3.setViewportView(jtVentasRegistradas);
+          if (jtVentasRegistradas.getColumnModel().getColumnCount() > 0) {
+               jtVentasRegistradas.getColumnModel().getColumn(0).setResizable(false);
+               jtVentasRegistradas.getColumnModel().getColumn(1).setResizable(false);
+               jtVentasRegistradas.getColumnModel().getColumn(2).setResizable(false);
+               jtVentasRegistradas.getColumnModel().getColumn(3).setResizable(false);
+          }
 
           javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
           jPanel2.setLayout(jPanel2Layout);
           jPanel2Layout.setHorizontalGroup(
                jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 869, Short.MAX_VALUE)
+               .addComponent(jScrollPane3)
                .addGroup(jPanel2Layout.createSequentialGroup()
                     .addContainerGap()
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -368,7 +407,7 @@ public class frm_Farmacia extends javax.swing.JFrame {
                                    .addGroup(jPanel2Layout.createSequentialGroup()
                                         .addComponent(jLabel11)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jSpinner1))
+                                        .addComponent(spnFecha))
                                    .addGroup(jPanel2Layout.createSequentialGroup()
                                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                              .addComponent(jLabel9)
@@ -381,7 +420,7 @@ public class frm_Farmacia extends javax.swing.JFrame {
                                                   .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                   .addComponent(spnCantCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                   .addGap(23, 23, 23)
-                                                  .addComponent(jButton1)))
+                                                  .addComponent(btnVenta)))
                                         .addGap(87, 87, 87)))
                               .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                               .addComponent(jLabel13)
@@ -394,7 +433,10 @@ public class frm_Farmacia extends javax.swing.JFrame {
                               .addComponent(jLabel15)
                               .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                               .addComponent(cboIndexVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                              .addContainerGap())))
+                              .addContainerGap())
+                         .addGroup(jPanel2Layout.createSequentialGroup()
+                              .addComponent(jLabel16)
+                              .addGap(0, 0, Short.MAX_VALUE))))
           );
           jPanel2Layout.setVerticalGroup(
                jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -411,20 +453,23 @@ public class frm_Farmacia extends javax.swing.JFrame {
                     .addGap(18, 18, 18)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                          .addComponent(jLabel11)
-                         .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                         .addComponent(spnFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGap(18, 18, 18)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                          .addComponent(jLabel12)
                          .addComponent(spnCantCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                         .addComponent(jButton1))
+                         .addComponent(btnVenta))
                     .addGap(42, 42, 42)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                          .addComponent(jLabel14)
                          .addComponent(jLabel15)
                          .addComponent(cboIndexVenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE)
-                    .addGap(171, 171, 171))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jLabel16)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))
           );
 
           jTabbedPane1.addTab("Realizar Venta", jPanel2);
@@ -486,12 +531,48 @@ public class frm_Farmacia extends javax.swing.JFrame {
      }//GEN-LAST:event_cboIndexVentaActionPerformed
 
      private void jtProductosVentaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtProductosVentaMousePressed
+          this.spnCantCliente.setEnabled(true);
           this.obtenerPrecioLista();
+         
      }//GEN-LAST:event_jtProductosVentaMousePressed
 
      private void spnCantClienteStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spnCantClienteStateChanged
           this.obtenerPrecioLista();
      }//GEN-LAST:event_spnCantClienteStateChanged
+
+     private void btnVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentaActionPerformed
+          this.tablaModelo = (DefaultTableModel) this.jtVentasRegistradas.getModel();
+          switch (this.cboIndexVenta.getSelectedIndex()) {
+               case 0:
+                    String dato [] = {this.txtNombreProducto1.getText(), String.valueOf(this.spnFecha.getValue()),
+                    this.inventario.getlAnalgesicos().get(this.jtProductosVenta.getSelectedRow()).getNombre(), "$ " + df.format(this.totalVenta)};
+                    this.tablaModelo.addRow(dato);
+                    break;
+               case 1:
+                    String dato1 [] = {this.txtNombreProducto1.getText(), String.valueOf(this.spnFecha.getValue()),
+                    this.inventario.getlAntiacidos().get(this.jtProductosVenta.getSelectedRow()).getNombre(), "$ " + df.format(this.totalVenta)};
+                    this.tablaModelo.addRow(dato1);
+                    break;
+               case 2:
+                    String dato2 [] = {this.txtNombreProducto1.getText(), String.valueOf(this.spnFecha.getValue()),
+                    this.inventario.getlAntialergicos().get(this.jtProductosVenta.getSelectedRow()).getNombre(), "$ " + df.format(this.totalVenta)};
+                    this.tablaModelo.addRow(dato2);
+               case 3:
+                    String dato3 [] = {this.txtNombreProducto1.getText(), String.valueOf(this.spnFecha.getValue()),
+                    this.inventario.getlAntidepresivos().get(this.jtProductosVenta.getSelectedRow()).getNombre(), "$ " + df.format(this.totalVenta)};
+                    this.tablaModelo.addRow(dato3);
+               case 4:
+                    String dato4 [] = {this.txtNombreProducto1.getText(), String.valueOf(this.spnFecha.getValue()),
+                    this.inventario.getlAntiinflamatorios().get(this.jtProductosVenta.getSelectedRow()).getNombre(), "$ " + df.format(this.totalVenta)};
+                    this.tablaModelo.addRow(dato4);
+               case 5:
+                    String dato5 [] = {this.txtNombreProducto1.getText(), String.valueOf(this.spnFecha.getValue()),
+                    this.inventario.getlAntipireticos().get(this.jtProductosVenta.getSelectedRow()).getNombre(), "$ " + df.format(this.totalVenta)};
+                    this.tablaModelo.addRow(dato5);
+
+          }
+          this.spnCantCliente.setEnabled(false);
+     }//GEN-LAST:event_btnVentaActionPerformed
 
      private void obtenerPrecioLista() {
           switch (this.cboIndexVenta.getSelectedIndex()) {
@@ -658,13 +739,13 @@ public class frm_Farmacia extends javax.swing.JFrame {
      }
      // Variables declaration - do not modify//GEN-BEGIN:variables
      private javax.swing.JButton btnRegistrarProducto;
+     private javax.swing.JButton btnVenta;
      private javax.swing.ButtonGroup btngTipoVenta;
      private javax.swing.JComboBox<String> cboIndexInventario;
      private javax.swing.JComboBox<String> cboIndexVenta;
      private javax.swing.JComboBox<String> cboTipoFarmaco;
      private javax.swing.JFormattedTextField ffIdProducto;
      private javax.swing.JFormattedTextField ffPrecio;
-     private javax.swing.JButton jButton1;
      private javax.swing.JLabel jLabel1;
      private javax.swing.JLabel jLabel10;
      private javax.swing.JLabel jLabel11;
@@ -672,6 +753,7 @@ public class frm_Farmacia extends javax.swing.JFrame {
      private javax.swing.JLabel jLabel13;
      private javax.swing.JLabel jLabel14;
      private javax.swing.JLabel jLabel15;
+     private javax.swing.JLabel jLabel16;
      private javax.swing.JLabel jLabel2;
      private javax.swing.JLabel jLabel3;
      private javax.swing.JLabel jLabel4;
@@ -684,14 +766,16 @@ public class frm_Farmacia extends javax.swing.JFrame {
      private javax.swing.JPanel jPanel2;
      private javax.swing.JScrollPane jScrollPane1;
      private javax.swing.JScrollPane jScrollPane2;
-     private javax.swing.JSpinner jSpinner1;
+     private javax.swing.JScrollPane jScrollPane3;
      private javax.swing.JTabbedPane jTabbedPane1;
      private javax.swing.JTable jtInventarioTotal;
      private javax.swing.JTable jtProductosVenta;
+     private javax.swing.JTable jtVentasRegistradas;
      private javax.swing.JRadioButton rbSoloReceta;
      private javax.swing.JRadioButton rbVentaLibre;
      private javax.swing.JSpinner spnCantCliente;
      private javax.swing.JSpinner spnCantDisponible;
+     private javax.swing.JSpinner spnFecha;
      private javax.swing.JTextField txtNombreProducto;
      private javax.swing.JTextField txtNombreProducto1;
      private javax.swing.JTextField txtTotalVenta;
